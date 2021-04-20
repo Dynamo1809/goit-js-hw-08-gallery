@@ -33,14 +33,14 @@ function createPictureGalleryMarkup (images) {
 refs.gallery.addEventListener('click' , onGalleryContainerClick);
 
 function onGalleryContainerClick(event){
-if(!event.target.classList.contains('gallery__image')  && !event.target.classList.contains('gallery__link')){
-  return;
-}
-event.preventDefault();
+  if(!event.target.classList.contains('gallery__image')  && !event.target.classList.contains('gallery__link')){
+    return;
+  }
+  event.preventDefault();
 
-refs.lightbox.classList.add('is-open');
-refs.modalImage.src = event.target.dataset.source || event.target.href;
-refs.modalImage.alt = event.target.alt || event.target.firstElementChild.alt;
+  refs.lightbox.classList.add('is-open');
+  refs.modalImage.src = event.target.dataset.source || event.target.href;
+  refs.modalImage.alt = event.target.alt || event.target.firstElementChild.alt;
 }
 
 refs.modalCloseBtn.addEventListener('click', onModalCloseBtnClick);
@@ -56,3 +56,28 @@ function onModalCloseBtnClick(event) {
     refs.modalImage.alt = '';
   }
 }
+
+document.addEventListener('keydown', onChangeModalImages);
+
+function onChangeModalImages(event) {
+  if(!refs.lightbox.classList.contains('is-open')){
+    return;
+  }
+
+  const originalSrc = [...galleryItems].map(image => image.original);
+  let newIndex = originalSrc.indexOf( refs.modalImage.src);
+  
+  if(event.code === 'ArrowLeft'){
+    newIndex -= 1;
+    if(newIndex === -1){
+      newIndex = originalSrc.length -1;
+    }
+  }else if(event.code === 'ArrowRight'){
+    newIndex += 1;
+    if(newIndex === originalSrc.length){
+      newIndex = 0;
+    }
+  }
+  refs.modalImage.src = originalSrc[newIndex];
+}
+
