@@ -1,0 +1,7 @@
+{
+  "liveServer.settings.CustomBrowser": "chrome",
+  "turboConsoleLog.logMessagePrefix": "",
+  "turboConsoleLog.quote": "'",
+  "turboConsoleLog.includeFileNameAndLineNum": false,
+  "terminal.integrated.shell.windows": "D://Git//bin//bash.exe"
+}
